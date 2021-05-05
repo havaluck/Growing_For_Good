@@ -44,4 +44,4 @@ In SSMS:
           ---- Note: Types of data to script is the last item in GENERAL (just above TABLE/VIEW                         OPTIONS)
       --- Select: OK
     -- Select: Next
--	Select: Next
+- Select: Next
