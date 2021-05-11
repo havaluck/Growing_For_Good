@@ -4,7 +4,7 @@ Repository for Spring Quarter 2021 - INFO 4140 - Section 2 - Databases Project -
 
 Private repository just for our group's project.
 
-NOTE: Thoughts are to have task assignees each create pull requests for their tasks and track in Projects tab?? Maybe create issues for each portion?
+NOTE: Thoughts are to have task assignees each create pull requests from their branches once we have assigned tasks??
 
 ---------- CURRENT PROJECT PART-----------
 
