@@ -4,6 +4,8 @@ Repository for Spring Quarter 2021 - INFO 4140 - Section 2 - Databases Project -
 
 Private repository just for our group's project.
 
+-----_____----- CURRENT PROJECT PART------______-----
+
 Project Part 2: Physical Database Implementation and Stored Procedures 
 
 Instructions:
