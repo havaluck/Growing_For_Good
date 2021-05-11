@@ -4,7 +4,7 @@ Repository for Spring Quarter 2021 - INFO 4140 - Section 2 - Databases Project -
 
 Private repository just for our group's project.
 
-NOTE: Branches are created for all 5 of the requirements listed in this part, once they are completed, we will create pull requests and pull them into main.
+NOTE: Thoughts are to have task assignees each create pull requests for their tasks and track in Projects tab?? Maybe create issues for each portion?
 
 ---------- CURRENT PROJECT PART-----------
 
