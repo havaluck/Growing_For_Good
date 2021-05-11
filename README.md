@@ -1,7 +1,6 @@
 # Growing_For_Good
 Repository for Spring Quarter 2021 - INFO 4140 - Section 2 - Databases Project - Group 4 - Growing For Good
 
-Test
 
 Private repository just for our group's project.
 
