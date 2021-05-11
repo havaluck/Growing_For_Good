@@ -1,0 +1,125 @@
+--Create the Growing For Good Database
+
+CREATE DATABASE GrowingForGood;
+
+--Create the Plot Table
+USE GrowingForGood
+
+CREATE TABLE Plot (
+    PlotID          INT           NOT NULL IDENTITY (1, 1),
+    EmployeeID      INT           NOT NULL IDENTITY (1, 1),
+    SupervisorID    INT           NOT NULL IDENTITY (1, 1),
+    CropID          INT           NOT NULL IDENTITY (1, 1),
+    Size            INT           NOT NULL,
+    -- Location was listed in our data dictionary as a char, but maybe it should be INT? Not sure.
+    Location        INT           NOTNULL);
+    
+--Create the Vendor Table
+
+USE GrowingForGood
+
+CREATE TABLE Vendor (
+    VendorID        INT           NOT NULL IDENTITY (1,1),
+    Name            VARCHAR(50)   NOT NULL,
+    BuildingNumber  INT           NOT NULL,
+    Street          VARCHAR(50)   NOT NULL,
+    City            VARCHAR(50)   NOT NULL,
+    State           CHAR(2)       NOT NULL,
+    ZipCode         INT           NOT NULL);
+
+--Create the Employee Table
+
+USE GrowingForGood
+
+CREATE TABLE Employee (
+    EmployeeID      INT           NOT NULL IDENTITY (1, 1),
+    FirstName       VARCHAR(50)   NOT NULL,
+    LastName        VARCHAR(50)   NOT NULL,
+    DateOfBirth     DATETIME      NOT NULL,
+    FirstDay        DATETIME      NOT NULL,
+    LastDay         DATETIME      NULL);
+
+--Create the Supervisor Table
+
+USE GrowingForGood
+
+CREATE TABLE Supervisor (
+    SupervisorID    INT           NOT NULL IDENTITY (1, 1),
+    FirstName       VARCHAR(50)   NOT NULL,
+    LastName        VARCHAR(50)   NOT NULL,
+    DateOfBirth     DATETIME      NOT NULL,
+    FirstDay        DATETIME      NOT NULL,
+    LastDay         DATETIME      NULL);
+    
+--Create the Crop Table
+
+USE GrowingForGood
+
+CREATE TABLE Crop (
+    CropID          INT           NOT NULL IDENTITY (1, 1),
+    Name            VARCHAR(50)   NOT NULL,
+    HarvestSeason   CHAR(3)       NOT NULL,
+    HardinessRating INT           NOT NULL);
+
+--Create the CropWaste Table
+
+USE GrowingForGood
+
+CREATE TABLE CropWaste (
+    CropWasteID     INT           NOT NULL IDENTITY (1, 1),
+    CropID          INT           NOT NULL IDENTITY (1, 1),
+    WasteID         INT           NOT NULL IDENTITY (1, 1),
+    Tonnage         INT           NOT NULL,
+    Date            DATETIME      NOT NULL);
+
+--Create the Waste Table
+
+USE GrowingForGood
+
+CREATE TABLE Waste (
+    WasteID           INT           NOT NULL IDENTITY (1, 1),
+    Name              VARCHAR(50)   NOT NULL,
+    SeverityRating    INT           NOT NULL,
+    DisposalLocation  INT           NOT NULL,
+    Cost              INT           NOT NULL);
+
+--Create Equipment Table
+
+USE GrowingForGood
+
+CREATE TABLE Equipment (
+    EquipmentID           INT           NOT NULL IDENTITY (1, 1),
+    VendorID              INT           NOT NULL IDENTITY (1, 1),
+    Name                  VARCHAR(50)   NOT NULL,
+    Classification        VARCHAR(50)   NOT NULL,
+    PlacedInServiceDate   DATETIME      NOT NULL);
+
+--Create the Usage Table
+
+USE GrowingForGood
+
+CREATE TABLE Usage (
+    UsageID               INT           NOT NULL IDENTITY (1, 1),
+    Name                  VARCHAR(25)   NOT NULL,
+    Category              VARCHAR(25)   NOT NULL,
+    SeverityRating        VARCHAR(25)   NOT NULL);
+
+--Create the EquipmentUsage Table
+
+USE GrowingForGood
+
+CREATE TABLE EquipmentUsage (
+    EquipmentUsageID     INT            NOT NULL IDENTITY (1, 1),
+    EquipmentID          INT            NOT NULL IDENTITY (1, 1),
+    UsageID              INT            NOT NULL IDENTITY (1, 1),
+    Amount               INT            NOT NULL,
+    Date                 DATETIME       NOT NULL);
+
+--Create the PlotEquipment Table
+
+USE GrowingForGood
+
+CREATE TABLE PlotEquipment (
+    PlotEquipmentID      INT             NOT NULL IDENTITY (1, 1),
+    EquipmentID          INT             NOT NULL IDENTITY (1, 1),
+    PlotID               INT             NOT NULL IDENTITY (1, 1));
