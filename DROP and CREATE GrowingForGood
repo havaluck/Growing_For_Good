@@ -1,0 +1,1067 @@
+USE [GrowingForGood]
+GO
+/****** Object:  StoredProcedure [dbo].[Vendorcontracts_sp]    Script Date: 5/15/2021 10:51:04 PM ******/
+DROP PROCEDURE [dbo].[Vendorcontracts_sp]
+GO
+/****** Object:  StoredProcedure [dbo].[UsageInEquipment_sp]    Script Date: 5/15/2021 10:51:04 PM ******/
+DROP PROCEDURE [dbo].[UsageInEquipment_sp]
+GO
+/****** Object:  StoredProcedure [dbo].[TenuredEmployeeByPlot_sp]    Script Date: 5/15/2021 10:51:04 PM ******/
+DROP PROCEDURE [dbo].[TenuredEmployeeByPlot_sp]
+GO
+/****** Object:  StoredProcedure [dbo].[GetWasteAmount_sp]    Script Date: 5/15/2021 10:51:04 PM ******/
+DROP PROCEDURE [dbo].[GetWasteAmount_sp]
+GO
+/****** Object:  StoredProcedure [dbo].[GetCropInfo_sp]    Script Date: 5/15/2021 10:51:04 PM ******/
+DROP PROCEDURE [dbo].[GetCropInfo_sp]
+GO
+/****** Object:  StoredProcedure [dbo].[EquipmentByPlot_sp]    Script Date: 5/15/2021 10:51:04 PM ******/
+DROP PROCEDURE [dbo].[EquipmentByPlot_sp]
+GO
+/****** Object:  StoredProcedure [dbo].[AddEmployee_sp]    Script Date: 5/15/2021 10:51:04 PM ******/
+DROP PROCEDURE [dbo].[AddEmployee_sp]
+GO
+ALTER TABLE [dbo].[Waste] DROP CONSTRAINT [FK_Waste_DisposalLocation_DisposalLocationID]
+GO
+ALTER TABLE [dbo].[SupervisorDetail] DROP CONSTRAINT [FK_SupervisorDetail_Employee_EmployeeID]
+GO
+ALTER TABLE [dbo].[PlotEquipment] DROP CONSTRAINT [FK_PlotEquipment_Plot_PlotID]
+GO
+ALTER TABLE [dbo].[PlotEquipment] DROP CONSTRAINT [FK_PlotEquipment_Equipment_EquipmentID]
+GO
+ALTER TABLE [dbo].[Plot] DROP CONSTRAINT [FK_Plot_Crop_CropID]
+GO
+ALTER TABLE [dbo].[EquipmentUsage] DROP CONSTRAINT [FK_EquipmentUsage_Usage_UsageID]
+GO
+ALTER TABLE [dbo].[EquipmentUsage] DROP CONSTRAINT [FK_EquipmentUsage_Equipment_EquipmentID]
+GO
+ALTER TABLE [dbo].[Equipment] DROP CONSTRAINT [FK_Equipment_Vendor_VendorID]
+GO
+ALTER TABLE [dbo].[Employee] DROP CONSTRAINT [FK_Employee_Plot_PlotID]
+GO
+ALTER TABLE [dbo].[CropWaste] DROP CONSTRAINT [FK_WasteID]
+GO
+ALTER TABLE [dbo].[CropWaste] DROP CONSTRAINT [FK_CropID]
+GO
+/****** Object:  Table [dbo].[Waste]    Script Date: 5/15/2021 10:51:04 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Waste]') AND type in (N'U'))
+DROP TABLE [dbo].[Waste]
+GO
+/****** Object:  Table [dbo].[Vendor]    Script Date: 5/15/2021 10:51:04 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Vendor]') AND type in (N'U'))
+DROP TABLE [dbo].[Vendor]
+GO
+/****** Object:  Table [dbo].[Usage]    Script Date: 5/15/2021 10:51:04 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Usage]') AND type in (N'U'))
+DROP TABLE [dbo].[Usage]
+GO
+/****** Object:  Table [dbo].[SupervisorDetail]    Script Date: 5/15/2021 10:51:04 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SupervisorDetail]') AND type in (N'U'))
+DROP TABLE [dbo].[SupervisorDetail]
+GO
+/****** Object:  Table [dbo].[PlotEquipment]    Script Date: 5/15/2021 10:51:04 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PlotEquipment]') AND type in (N'U'))
+DROP TABLE [dbo].[PlotEquipment]
+GO
+/****** Object:  Table [dbo].[Plot]    Script Date: 5/15/2021 10:51:04 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Plot]') AND type in (N'U'))
+DROP TABLE [dbo].[Plot]
+GO
+/****** Object:  Table [dbo].[EquipmentUsage]    Script Date: 5/15/2021 10:51:04 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[EquipmentUsage]') AND type in (N'U'))
+DROP TABLE [dbo].[EquipmentUsage]
+GO
+/****** Object:  Table [dbo].[Equipment]    Script Date: 5/15/2021 10:51:04 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Equipment]') AND type in (N'U'))
+DROP TABLE [dbo].[Equipment]
+GO
+/****** Object:  Table [dbo].[Employee]    Script Date: 5/15/2021 10:51:04 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Employee]') AND type in (N'U'))
+DROP TABLE [dbo].[Employee]
+GO
+/****** Object:  Table [dbo].[DisposalLocation]    Script Date: 5/15/2021 10:51:04 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DisposalLocation]') AND type in (N'U'))
+DROP TABLE [dbo].[DisposalLocation]
+GO
+/****** Object:  Table [dbo].[CropWaste]    Script Date: 5/15/2021 10:51:04 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CropWaste]') AND type in (N'U'))
+DROP TABLE [dbo].[CropWaste]
+GO
+/****** Object:  Table [dbo].[Crop]    Script Date: 5/15/2021 10:51:04 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Crop]') AND type in (N'U'))
+DROP TABLE [dbo].[Crop]
+GO
+USE [master]
+GO
+/****** Object:  Database [GrowingForGood]    Script Date: 5/15/2021 10:51:04 PM ******/
+DROP DATABASE [GrowingForGood]
+GO
+/****** Object:  Database [GrowingForGood]    Script Date: 5/15/2021 10:51:04 PM ******/
+CREATE DATABASE [GrowingForGood]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'GrowingForGood', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\GrowingForGood.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'GrowingForGood_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\GrowingForGood_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [GrowingForGood] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [GrowingForGood].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [GrowingForGood] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [GrowingForGood] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [GrowingForGood] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [GrowingForGood] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [GrowingForGood] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET RECOVERY FULL 
+GO
+ALTER DATABASE [GrowingForGood] SET  MULTI_USER 
+GO
+ALTER DATABASE [GrowingForGood] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [GrowingForGood] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [GrowingForGood] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [GrowingForGood] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [GrowingForGood] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [GrowingForGood] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'GrowingForGood', N'ON'
+GO
+ALTER DATABASE [GrowingForGood] SET QUERY_STORE = OFF
+GO
+USE [GrowingForGood]
+GO
+/****** Object:  Table [dbo].[Crop]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Crop](
+	[CropID] [int] NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[HarvestSeason] [char](3) NOT NULL,
+	[HardinessRating] [int] NOT NULL,
+ CONSTRAINT [PK_Crop] PRIMARY KEY CLUSTERED 
+(
+	[CropID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[CropWaste]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CropWaste](
+	[CropWasteID] [int] NOT NULL,
+	[CropID] [int] NOT NULL,
+	[WasteID] [int] NOT NULL,
+	[Tonnage] [float] NOT NULL,
+	[Date] [date] NOT NULL,
+ CONSTRAINT [PK_CropWaste] PRIMARY KEY CLUSTERED 
+(
+	[CropWasteID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DisposalLocation]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DisposalLocation](
+	[DisposalLocationID] [int] NOT NULL,
+	[BuildingNumber] [int] NOT NULL,
+	[Street] [varchar](50) NOT NULL,
+	[City] [varchar](50) NOT NULL,
+	[State] [char](2) NOT NULL,
+	[ZipCode] [int] NULL,
+ CONSTRAINT [PK_DisposalLocation] PRIMARY KEY CLUSTERED 
+(
+	[DisposalLocationID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Employee]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Employee](
+	[EmployeeID] [int] NOT NULL,
+	[PlotID] [int] NULL,
+	[FirstName] [varchar](50) NOT NULL,
+	[LastName] [varchar](50) NOT NULL,
+	[DateOfBirth] [date] NOT NULL,
+	[FirstDay] [date] NOT NULL,
+	[LastDay] [date] NULL,
+	[SupervisorRole] [int] NOT NULL,
+ CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED 
+(
+	[EmployeeID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Equipment]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Equipment](
+	[EquipmentID] [int] NOT NULL,
+	[VendorID] [int] NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Classification] [varchar](50) NOT NULL,
+	[PlacedInServiceDate] [date] NOT NULL,
+ CONSTRAINT [PK_Equipment] PRIMARY KEY CLUSTERED 
+(
+	[EquipmentID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EquipmentUsage]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EquipmentUsage](
+	[EquipmentUsageID] [int] NOT NULL,
+	[EquipmentID] [int] NOT NULL,
+	[UsageID] [int] NOT NULL,
+	[Amount] [int] NOT NULL,
+	[Date] [datetime] NOT NULL,
+ CONSTRAINT [PK_EquipmentUsageID] PRIMARY KEY CLUSTERED 
+(
+	[EquipmentUsageID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Plot]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Plot](
+	[PlotID] [int] NOT NULL,
+	[CropID] [int] NULL,
+	[Size] [varchar](3) NOT NULL,
+	[Location] [float] NULL,
+ CONSTRAINT [PK_Plot] PRIMARY KEY CLUSTERED 
+(
+	[PlotID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PlotEquipment]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PlotEquipment](
+	[PlotEquipmentID] [int] NOT NULL,
+	[EquipmentID] [int] NOT NULL,
+	[PlotID] [int] NOT NULL,
+ CONSTRAINT [PK_PlotEquipment] PRIMARY KEY CLUSTERED 
+(
+	[PlotEquipmentID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SupervisorDetail]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SupervisorDetail](
+	[SupervisorDetailID] [int] NOT NULL,
+	[EmployeeID] [int] NOT NULL,
+	[FirstDay] [datetime] NOT NULL,
+	[LastDay] [datetime] NULL,
+ CONSTRAINT [PK_SupervisorDetail] PRIMARY KEY CLUSTERED 
+(
+	[SupervisorDetailID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Usage]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Usage](
+	[UsageID] [int] NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Category] [varchar](50) NOT NULL,
+	[SeverityRating] [int] NOT NULL,
+ CONSTRAINT [PK_UsageID] PRIMARY KEY CLUSTERED 
+(
+	[UsageID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Vendor]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Vendor](
+	[VendorID] [int] NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[BuildingNumber] [int] NOT NULL,
+	[Street] [varchar](50) NOT NULL,
+	[City] [varchar](50) NOT NULL,
+	[State] [char](2) NOT NULL,
+	[ZipCode] [char](5) NULL,
+ CONSTRAINT [PK_Vendor] PRIMARY KEY CLUSTERED 
+(
+	[VendorID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Waste]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Waste](
+	[WasteID] [int] NOT NULL,
+	[DisposalLocationID] [int] NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[SeverityRating] [int] NOT NULL,
+	[Cost] [int] NOT NULL,
+ CONSTRAINT [PK_Waste] PRIMARY KEY CLUSTERED 
+(
+	[WasteID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (30, N'Eriogonum glandulosum (Nutt.) Nutt. ex Benth.', N'SPR', 1)
+GO
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (31, N'Callistemon rugulosus DC.', N'SUM', 4)
+GO
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (32, N'Juncus tracyi Rydb.', N'SUM', 6)
+GO
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (33, N'Cryptantha wigginsii I.M. Johnst.', N'SPR', 6)
+GO
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (34, N'Atriplex eardleyae Aellen', N'SUM', 6)
+GO
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (35, N'Usnea affinis Mot.', N'SPR', 2)
+GO
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (36, N'Buellia silicicola de Lesd.', N'SPR', 2)
+GO
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (37, N'Cynosciadium digitatum DC.', N'FAL', 6)
+GO
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (38, N'Calyptranthes zuzygium (L.) Sw.', N'FAL', 4)
+GO
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (39, N'Cladrastis Raf.', N'SUM', 2)
+GO
+INSERT [dbo].[CropWaste] ([CropWasteID], [CropID], [WasteID], [Tonnage], [Date]) VALUES (900, 34, 79, 60.14, CAST(N'1989-07-29' AS Date))
+GO
+INSERT [dbo].[CropWaste] ([CropWasteID], [CropID], [WasteID], [Tonnage], [Date]) VALUES (901, 30, 75, 61.1, CAST(N'1988-07-07' AS Date))
+GO
+INSERT [dbo].[CropWaste] ([CropWasteID], [CropID], [WasteID], [Tonnage], [Date]) VALUES (902, 34, 76, 42.47, CAST(N'2015-07-30' AS Date))
+GO
+INSERT [dbo].[CropWaste] ([CropWasteID], [CropID], [WasteID], [Tonnage], [Date]) VALUES (903, 32, 72, 35.86, CAST(N'1985-03-21' AS Date))
+GO
+INSERT [dbo].[CropWaste] ([CropWasteID], [CropID], [WasteID], [Tonnage], [Date]) VALUES (904, 30, 77, 67.05, CAST(N'1987-03-20' AS Date))
+GO
+INSERT [dbo].[CropWaste] ([CropWasteID], [CropID], [WasteID], [Tonnage], [Date]) VALUES (905, 36, 71, 60.4, CAST(N'1980-11-03' AS Date))
+GO
+INSERT [dbo].[CropWaste] ([CropWasteID], [CropID], [WasteID], [Tonnage], [Date]) VALUES (906, 34, 72, 10.03, CAST(N'1991-02-03' AS Date))
+GO
+INSERT [dbo].[CropWaste] ([CropWasteID], [CropID], [WasteID], [Tonnage], [Date]) VALUES (907, 31, 72, 18.45, CAST(N'2012-06-19' AS Date))
+GO
+INSERT [dbo].[CropWaste] ([CropWasteID], [CropID], [WasteID], [Tonnage], [Date]) VALUES (908, 30, 78, 17.11, CAST(N'1985-03-01' AS Date))
+GO
+INSERT [dbo].[CropWaste] ([CropWasteID], [CropID], [WasteID], [Tonnage], [Date]) VALUES (909, 30, 71, 22.45, CAST(N'2003-03-27' AS Date))
+GO
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (10, 80063, N'Scott', N'Monticello', N'MN', NULL)
+GO
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (11, 4481, N'Cody', N'Washington', N'DC', NULL)
+GO
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (12, 70128, N'Northfield', N'Anchorage', N'AK', NULL)
+GO
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (13, 2146, N'North', N'Lancaster', N'PA', NULL)
+GO
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (14, 7280, N'Fordem', N'Huntsville', N'AL', NULL)
+GO
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (15, 95, N'Sauthoff', N'Roanoke', N'VA', NULL)
+GO
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (16, 8930, N'Lunder', N'Sioux Falls', N'SD', NULL)
+GO
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (17, 76, N'Merrick', N'Jacksonville', N'FL', NULL)
+GO
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (18, 25, N'Blackbird', N'Sarasota', N'FL', NULL)
+GO
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (19, 7818, N'Prentice', N'Durham', N'NC', NULL)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (200, NULL, N'Réjane', N'Dhenin', CAST(N'2000-05-12' AS Date), CAST(N'2010-12-06' AS Date), CAST(N'2015-05-17' AS Date), 1)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (201, NULL, N'Irène', N'Pruvost', CAST(N'1995-12-12' AS Date), CAST(N'2013-12-31' AS Date), CAST(N'2011-02-17' AS Date), 0)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (202, 1, N'Örjan', N'Cheston', CAST(N'1985-01-30' AS Date), CAST(N'2013-02-11' AS Date), NULL, 1)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (203, 2, N'Bécassine', N'Philippon', CAST(N'1989-02-06' AS Date), CAST(N'2008-02-05' AS Date), NULL, 1)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (204, 3, N'Pò', N'Gilmour', CAST(N'1976-10-15' AS Date), CAST(N'2003-05-09' AS Date), NULL, 1)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (205, 9, N'Börje', N'Tunbridge', CAST(N'1981-05-08' AS Date), CAST(N'2002-11-30' AS Date), NULL, 0)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (206, 1, N'Zhì', N'Illston', CAST(N'1987-02-14' AS Date), CAST(N'2013-04-12' AS Date), NULL, 0)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (207, 10, N'Laurélie', N'Manford', CAST(N'1994-04-22' AS Date), CAST(N'2018-09-25' AS Date), NULL, 0)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (208, NULL, N'Mahélie', N'Philbrick', CAST(N'1996-12-22' AS Date), CAST(N'2010-03-01' AS Date), CAST(N'2017-03-03' AS Date), 0)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (209, NULL, N'Pål', N'Klulicek', CAST(N'2000-12-27' AS Date), CAST(N'2013-03-14' AS Date), CAST(N'2020-06-08' AS Date), 0)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (210, 5, N'Aubine', N'Mackin', CAST(N'1984-09-02' AS Date), CAST(N'1999-04-05' AS Date), NULL, 1)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (211, NULL, N'Deborah', N'Wilcockes', CAST(N'1981-03-15' AS Date), CAST(N'1999-03-15' AS Date), CAST(N'2007-11-20' AS Date), 1)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (212, 6, N'Clarie', N'Benneyworth', CAST(N'1995-10-18' AS Date), CAST(N'2001-05-06' AS Date), NULL, 1)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (213, NULL, N'Vivien', N'Shere', CAST(N'1990-07-09' AS Date), CAST(N'2002-10-03' AS Date), CAST(N'2012-08-20' AS Date), 1)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (214, 9, N'Felipa', N'Priestland', CAST(N'1986-09-04' AS Date), CAST(N'1997-07-23' AS Date), NULL, 1)
+GO
+INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (215, 10, N'First', N'Last', CAST(N'1994-12-14' AS Date), CAST(N'2021-05-14' AS Date), NULL, 1)
+GO
+INSERT [dbo].[Equipment] ([EquipmentID], [VendorID], [Name], [Classification], [PlacedInServiceDate]) VALUES (30, 50, N'Mattock', N'Handheld', CAST(N'2015-06-26' AS Date))
+GO
+INSERT [dbo].[Equipment] ([EquipmentID], [VendorID], [Name], [Classification], [PlacedInServiceDate]) VALUES (31, 51, N'F150', N'Vehicle', CAST(N'2019-03-25' AS Date))
+GO
+INSERT [dbo].[Equipment] ([EquipmentID], [VendorID], [Name], [Classification], [PlacedInServiceDate]) VALUES (32, 52, N'Dump Truck', N'Vehicle', CAST(N'1997-05-09' AS Date))
+GO
+INSERT [dbo].[Equipment] ([EquipmentID], [VendorID], [Name], [Classification], [PlacedInServiceDate]) VALUES (33, 53, N'Trencher', N'HeavyMachinery', CAST(N'2004-07-26' AS Date))
+GO
+INSERT [dbo].[Equipment] ([EquipmentID], [VendorID], [Name], [Classification], [PlacedInServiceDate]) VALUES (34, 54, N'Bulldozer', N'HeavyMachinery', CAST(N'1999-07-04' AS Date))
+GO
+INSERT [dbo].[Equipment] ([EquipmentID], [VendorID], [Name], [Classification], [PlacedInServiceDate]) VALUES (35, 55, N'Shovel', N'Handheld', CAST(N'2017-09-22' AS Date))
+GO
+INSERT [dbo].[Equipment] ([EquipmentID], [VendorID], [Name], [Classification], [PlacedInServiceDate]) VALUES (36, 56, N'Excavator', N'HeavyMachinery', CAST(N'1992-02-29' AS Date))
+GO
+INSERT [dbo].[Equipment] ([EquipmentID], [VendorID], [Name], [Classification], [PlacedInServiceDate]) VALUES (37, 57, N'Trencher', N'HeavyMachinery', CAST(N'2001-11-15' AS Date))
+GO
+INSERT [dbo].[Equipment] ([EquipmentID], [VendorID], [Name], [Classification], [PlacedInServiceDate]) VALUES (38, 58, N'Hammer', N'Handheld', CAST(N'2016-06-25' AS Date))
+GO
+INSERT [dbo].[Equipment] ([EquipmentID], [VendorID], [Name], [Classification], [PlacedInServiceDate]) VALUES (39, 59, N'Dragline', N'HeavyMachinery', CAST(N'2007-06-21' AS Date))
+GO
+INSERT [dbo].[EquipmentUsage] ([EquipmentUsageID], [EquipmentID], [UsageID], [Amount], [Date]) VALUES (1, 30, 101, 54580, CAST(N'2020-12-23T00:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[EquipmentUsage] ([EquipmentUsageID], [EquipmentID], [UsageID], [Amount], [Date]) VALUES (2, 31, 102, 23328, CAST(N'2020-09-16T00:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[EquipmentUsage] ([EquipmentUsageID], [EquipmentID], [UsageID], [Amount], [Date]) VALUES (3, 32, 103, 45000, CAST(N'2020-10-08T00:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[EquipmentUsage] ([EquipmentUsageID], [EquipmentID], [UsageID], [Amount], [Date]) VALUES (4, 33, 104, 96086, CAST(N'2020-10-12T00:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[EquipmentUsage] ([EquipmentUsageID], [EquipmentID], [UsageID], [Amount], [Date]) VALUES (5, 34, 105, 90767, CAST(N'2019-11-13T00:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[EquipmentUsage] ([EquipmentUsageID], [EquipmentID], [UsageID], [Amount], [Date]) VALUES (6, 35, 106, 20632, CAST(N'2020-02-22T00:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[EquipmentUsage] ([EquipmentUsageID], [EquipmentID], [UsageID], [Amount], [Date]) VALUES (7, 36, 107, 31017, CAST(N'2020-09-02T00:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[EquipmentUsage] ([EquipmentUsageID], [EquipmentID], [UsageID], [Amount], [Date]) VALUES (8, 37, 108, 49864, CAST(N'2020-05-19T00:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[EquipmentUsage] ([EquipmentUsageID], [EquipmentID], [UsageID], [Amount], [Date]) VALUES (9, 38, 109, 98148, CAST(N'2019-01-09T00:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[EquipmentUsage] ([EquipmentUsageID], [EquipmentID], [UsageID], [Amount], [Date]) VALUES (10, 39, 110, 78936, CAST(N'2021-02-02T00:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[Plot] ([PlotID], [CropID], [Size], [Location]) VALUES (1, 30, N'2XL', -34.9284989)
+GO
+INSERT [dbo].[Plot] ([PlotID], [CropID], [Size], [Location]) VALUES (2, 31, N'L', 3.1523104)
+GO
+INSERT [dbo].[Plot] ([PlotID], [CropID], [Size], [Location]) VALUES (3, 32, N'XS', -8.7433)
+GO
+INSERT [dbo].[Plot] ([PlotID], [CropID], [Size], [Location]) VALUES (4, NULL, N'XL', 53.9094)
+GO
+INSERT [dbo].[Plot] ([PlotID], [CropID], [Size], [Location]) VALUES (5, 34, N'3XL', 38.7150205)
+GO
+INSERT [dbo].[Plot] ([PlotID], [CropID], [Size], [Location]) VALUES (6, 35, N'S', 6.6814285)
+GO
+INSERT [dbo].[Plot] ([PlotID], [CropID], [Size], [Location]) VALUES (7, NULL, N'3XL', 46.6974533)
+GO
+INSERT [dbo].[Plot] ([PlotID], [CropID], [Size], [Location]) VALUES (8, NULL, N'XS', 2.4183904)
+GO
+INSERT [dbo].[Plot] ([PlotID], [CropID], [Size], [Location]) VALUES (9, 38, N'XL', 11.4222249)
+GO
+INSERT [dbo].[Plot] ([PlotID], [CropID], [Size], [Location]) VALUES (10, 39, N'2XL', 51.1907529)
+GO
+INSERT [dbo].[PlotEquipment] ([PlotEquipmentID], [EquipmentID], [PlotID]) VALUES (60, 30, 2)
+GO
+INSERT [dbo].[PlotEquipment] ([PlotEquipmentID], [EquipmentID], [PlotID]) VALUES (61, 31, 2)
+GO
+INSERT [dbo].[PlotEquipment] ([PlotEquipmentID], [EquipmentID], [PlotID]) VALUES (62, 32, 3)
+GO
+INSERT [dbo].[PlotEquipment] ([PlotEquipmentID], [EquipmentID], [PlotID]) VALUES (63, 33, 8)
+GO
+INSERT [dbo].[PlotEquipment] ([PlotEquipmentID], [EquipmentID], [PlotID]) VALUES (64, 34, 5)
+GO
+INSERT [dbo].[PlotEquipment] ([PlotEquipmentID], [EquipmentID], [PlotID]) VALUES (65, 35, 6)
+GO
+INSERT [dbo].[PlotEquipment] ([PlotEquipmentID], [EquipmentID], [PlotID]) VALUES (66, 36, 9)
+GO
+INSERT [dbo].[PlotEquipment] ([PlotEquipmentID], [EquipmentID], [PlotID]) VALUES (67, 37, 9)
+GO
+INSERT [dbo].[PlotEquipment] ([PlotEquipmentID], [EquipmentID], [PlotID]) VALUES (68, 38, 9)
+GO
+INSERT [dbo].[PlotEquipment] ([PlotEquipmentID], [EquipmentID], [PlotID]) VALUES (69, 39, 8)
+GO
+INSERT [dbo].[SupervisorDetail] ([SupervisorDetailID], [EmployeeID], [FirstDay], [LastDay]) VALUES (2200, 200, CAST(N'2015-05-10T00:00:00.000' AS DateTime), CAST(N'1905-06-17T00:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[SupervisorDetail] ([SupervisorDetailID], [EmployeeID], [FirstDay], [LastDay]) VALUES (2201, 202, CAST(N'2013-02-13T00:00:00.000' AS DateTime), NULL)
+GO
+INSERT [dbo].[SupervisorDetail] ([SupervisorDetailID], [EmployeeID], [FirstDay], [LastDay]) VALUES (2202, 203, CAST(N'2012-12-27T00:00:00.000' AS DateTime), NULL)
+GO
+INSERT [dbo].[SupervisorDetail] ([SupervisorDetailID], [EmployeeID], [FirstDay], [LastDay]) VALUES (2203, 204, CAST(N'2020-12-03T00:00:00.000' AS DateTime), NULL)
+GO
+INSERT [dbo].[SupervisorDetail] ([SupervisorDetailID], [EmployeeID], [FirstDay], [LastDay]) VALUES (2204, 210, CAST(N'2001-11-02T00:00:00.000' AS DateTime), NULL)
+GO
+INSERT [dbo].[SupervisorDetail] ([SupervisorDetailID], [EmployeeID], [FirstDay], [LastDay]) VALUES (2205, 211, CAST(N'1985-03-17T00:00:00.000' AS DateTime), CAST(N'1990-01-23T00:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[SupervisorDetail] ([SupervisorDetailID], [EmployeeID], [FirstDay], [LastDay]) VALUES (2206, 212, CAST(N'2009-05-08T00:00:00.000' AS DateTime), NULL)
+GO
+INSERT [dbo].[SupervisorDetail] ([SupervisorDetailID], [EmployeeID], [FirstDay], [LastDay]) VALUES (2207, 213, CAST(N'2009-05-08T00:00:00.000' AS DateTime), CAST(N'2012-08-22T00:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[SupervisorDetail] ([SupervisorDetailID], [EmployeeID], [FirstDay], [LastDay]) VALUES (2208, 214, CAST(N'1997-07-25T00:00:00.000' AS DateTime), CAST(N'2021-05-12T00:00:00.000' AS DateTime))
+GO
+INSERT [dbo].[Usage] ([UsageID], [Name], [Category], [SeverityRating]) VALUES (101, N'Diesel', N'Fuel', 33)
+GO
+INSERT [dbo].[Usage] ([UsageID], [Name], [Category], [SeverityRating]) VALUES (102, N'HourLimit', N'Hours', 94)
+GO
+INSERT [dbo].[Usage] ([UsageID], [Name], [Category], [SeverityRating]) VALUES (103, N'Diesel', N'Fuel', 42)
+GO
+INSERT [dbo].[Usage] ([UsageID], [Name], [Category], [SeverityRating]) VALUES (104, N'Gasoline', N'Fuel', 70)
+GO
+INSERT [dbo].[Usage] ([UsageID], [Name], [Category], [SeverityRating]) VALUES (105, N'Driving', N'Miles', 74)
+GO
+INSERT [dbo].[Usage] ([UsageID], [Name], [Category], [SeverityRating]) VALUES (106, N'Caliper', N'Maintenance', 52)
+GO
+INSERT [dbo].[Usage] ([UsageID], [Name], [Category], [SeverityRating]) VALUES (107, N'Driving', N'Miles', 36)
+GO
+INSERT [dbo].[Usage] ([UsageID], [Name], [Category], [SeverityRating]) VALUES (108, N'HandleFitting', N'Maintenance', 4)
+GO
+INSERT [dbo].[Usage] ([UsageID], [Name], [Category], [SeverityRating]) VALUES (109, N'HubCap', N'Maintenance', 67)
+GO
+INSERT [dbo].[Usage] ([UsageID], [Name], [Category], [SeverityRating]) VALUES (110, N'Diesel', N'Fuel', 63)
+GO
+INSERT [dbo].[Vendor] ([VendorID], [Name], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (50, N'Oyoyo', 7130, N'Bartelt', N'El Paso', N'TX', NULL)
+GO
+INSERT [dbo].[Vendor] ([VendorID], [Name], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (51, N'Realfire', 73624, N'Burrows', N'Fort Collins', N'CO', NULL)
+GO
+INSERT [dbo].[Vendor] ([VendorID], [Name], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (52, N'Dabvine', 722, N'Dahle', N'Chattanooga', N'TN', N'37416')
+GO
+INSERT [dbo].[Vendor] ([VendorID], [Name], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (53, N'Cogilith', 4, N'Warbler', N'Whittier', N'CA', N'90605')
+GO
+INSERT [dbo].[Vendor] ([VendorID], [Name], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (54, N'Midel', 154, N'Graedel', N'Houston', N'TX', N'77030')
+GO
+INSERT [dbo].[Vendor] ([VendorID], [Name], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (55, N'Meeveo', 306, N'Kedzie', N'Washington', N'DC', NULL)
+GO
+INSERT [dbo].[Vendor] ([VendorID], [Name], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (56, N'Lajo', 66742, N'Moland', N'Phoenix', N'AZ', N'85045')
+GO
+INSERT [dbo].[Vendor] ([VendorID], [Name], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (57, N'Fivebridge', 14, N'Monica', N'Amarillo', N'TX', N'79159')
+GO
+INSERT [dbo].[Vendor] ([VendorID], [Name], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (58, N'Kanoodle', 38, N'Dahle', N'Houston', N'TX', N'77228')
+GO
+INSERT [dbo].[Vendor] ([VendorID], [Name], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (59, N'Cogibox', 91, N'Prairieview', N'San Luis Obispo', N'CA', N'93407')
+GO
+INSERT [dbo].[Waste] ([WasteID], [DisposalLocationID], [Name], [SeverityRating], [Cost]) VALUES (70, 15, N'Clonidine Hydrochloride', 67, 3)
+GO
+INSERT [dbo].[Waste] ([WasteID], [DisposalLocationID], [Name], [SeverityRating], [Cost]) VALUES (71, 10, N'CITRUS CYDONIA 5%', 36, 4)
+GO
+INSERT [dbo].[Waste] ([WasteID], [DisposalLocationID], [Name], [SeverityRating], [Cost]) VALUES (72, 19, N'Miconazole Nitrate', 11, 2)
+GO
+INSERT [dbo].[Waste] ([WasteID], [DisposalLocationID], [Name], [SeverityRating], [Cost]) VALUES (73, 18, N'Dextromethorphan HBr, Guaifenesin', 32, 4)
+GO
+INSERT [dbo].[Waste] ([WasteID], [DisposalLocationID], [Name], [SeverityRating], [Cost]) VALUES (74, 10, N'peginterferon alfa-2b', 22, 7)
+GO
+INSERT [dbo].[Waste] ([WasteID], [DisposalLocationID], [Name], [SeverityRating], [Cost]) VALUES (75, 11, N'Aluminum Zirconium Tetrachlorohydrex GLY', 21, 5)
+GO
+INSERT [dbo].[Waste] ([WasteID], [DisposalLocationID], [Name], [SeverityRating], [Cost]) VALUES (76, 10, N'Sertraline Hydrochloride', 22, 6)
+GO
+INSERT [dbo].[Waste] ([WasteID], [DisposalLocationID], [Name], [SeverityRating], [Cost]) VALUES (77, 10, N'Lorazepam', 66, 2)
+GO
+INSERT [dbo].[Waste] ([WasteID], [DisposalLocationID], [Name], [SeverityRating], [Cost]) VALUES (78, 11, N'lansoprazole', 63, 3)
+GO
+INSERT [dbo].[Waste] ([WasteID], [DisposalLocationID], [Name], [SeverityRating], [Cost]) VALUES (79, 15, N'cyclobenzaprine hydrochloride', 40, 1)
+GO
+ALTER TABLE [dbo].[CropWaste]  WITH CHECK ADD  CONSTRAINT [FK_CropID] FOREIGN KEY([CropID])
+REFERENCES [dbo].[Crop] ([CropID])
+GO
+ALTER TABLE [dbo].[CropWaste] CHECK CONSTRAINT [FK_CropID]
+GO
+ALTER TABLE [dbo].[CropWaste]  WITH CHECK ADD  CONSTRAINT [FK_WasteID] FOREIGN KEY([WasteID])
+REFERENCES [dbo].[Waste] ([WasteID])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [dbo].[CropWaste] CHECK CONSTRAINT [FK_WasteID]
+GO
+ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Plot_PlotID] FOREIGN KEY([PlotID])
+REFERENCES [dbo].[Plot] ([PlotID])
+GO
+ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Employee_Plot_PlotID]
+GO
+ALTER TABLE [dbo].[Equipment]  WITH CHECK ADD  CONSTRAINT [FK_Equipment_Vendor_VendorID] FOREIGN KEY([VendorID])
+REFERENCES [dbo].[Vendor] ([VendorID])
+GO
+ALTER TABLE [dbo].[Equipment] CHECK CONSTRAINT [FK_Equipment_Vendor_VendorID]
+GO
+ALTER TABLE [dbo].[EquipmentUsage]  WITH CHECK ADD  CONSTRAINT [FK_EquipmentUsage_Equipment_EquipmentID] FOREIGN KEY([EquipmentID])
+REFERENCES [dbo].[Equipment] ([EquipmentID])
+GO
+ALTER TABLE [dbo].[EquipmentUsage] CHECK CONSTRAINT [FK_EquipmentUsage_Equipment_EquipmentID]
+GO
+ALTER TABLE [dbo].[EquipmentUsage]  WITH CHECK ADD  CONSTRAINT [FK_EquipmentUsage_Usage_UsageID] FOREIGN KEY([UsageID])
+REFERENCES [dbo].[Usage] ([UsageID])
+GO
+ALTER TABLE [dbo].[EquipmentUsage] CHECK CONSTRAINT [FK_EquipmentUsage_Usage_UsageID]
+GO
+ALTER TABLE [dbo].[Plot]  WITH CHECK ADD  CONSTRAINT [FK_Plot_Crop_CropID] FOREIGN KEY([CropID])
+REFERENCES [dbo].[Crop] ([CropID])
+GO
+ALTER TABLE [dbo].[Plot] CHECK CONSTRAINT [FK_Plot_Crop_CropID]
+GO
+ALTER TABLE [dbo].[PlotEquipment]  WITH CHECK ADD  CONSTRAINT [FK_PlotEquipment_Equipment_EquipmentID] FOREIGN KEY([EquipmentID])
+REFERENCES [dbo].[Equipment] ([EquipmentID])
+GO
+ALTER TABLE [dbo].[PlotEquipment] CHECK CONSTRAINT [FK_PlotEquipment_Equipment_EquipmentID]
+GO
+ALTER TABLE [dbo].[PlotEquipment]  WITH CHECK ADD  CONSTRAINT [FK_PlotEquipment_Plot_PlotID] FOREIGN KEY([PlotID])
+REFERENCES [dbo].[Plot] ([PlotID])
+GO
+ALTER TABLE [dbo].[PlotEquipment] CHECK CONSTRAINT [FK_PlotEquipment_Plot_PlotID]
+GO
+ALTER TABLE [dbo].[SupervisorDetail]  WITH CHECK ADD  CONSTRAINT [FK_SupervisorDetail_Employee_EmployeeID] FOREIGN KEY([EmployeeID])
+REFERENCES [dbo].[Employee] ([EmployeeID])
+GO
+ALTER TABLE [dbo].[SupervisorDetail] CHECK CONSTRAINT [FK_SupervisorDetail_Employee_EmployeeID]
+GO
+ALTER TABLE [dbo].[Waste]  WITH CHECK ADD  CONSTRAINT [FK_Waste_DisposalLocation_DisposalLocationID] FOREIGN KEY([DisposalLocationID])
+REFERENCES [dbo].[DisposalLocation] ([DisposalLocationID])
+GO
+ALTER TABLE [dbo].[Waste] CHECK CONSTRAINT [FK_Waste_DisposalLocation_DisposalLocationID]
+GO
+/****** Object:  StoredProcedure [dbo].[AddEmployee_sp]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS OFF
+GO
+SET QUOTED_IDENTIFIER OFF
+GO
+
+CREATE PROCEDURE	[dbo].[AddEmployee_sp]
+(					@FirstName VARCHAR(50),
+					@LastName VARCHAR(50),
+					@DateOfBirth DATE,
+					@FirstDay DATE,
+					@SupervisorRole INT
+)
+
+AS
+/*-------------------------------------------------------------------------------------------------
+CREATED: May 14, 2021
+AUTHOR:  Henry Valuck
+DESCRIPTION: To add all necessary information for a new employee, and have the Employee and SupervisorDetail
+append the new data properly if the criteria are met.
+
+ Example: EXEC GrowingForGood.dbo.AddEmployee_sp 'Henry', 'Valuck, '1994-12-14', '2021-05-14', 0
+
+	
+ CHANGE HISTORY
+ Date			Modified By		Notes
+ 05/14/2021		HValuck		Procedure Created 
+----------------------------------------------------------------------------------------------------*/
+
+DECLARE				@EmployeeID INT, 
+					@First VARCHAR(50),
+					@Last VARCHAR(50),
+					@SupervisorDetailID INT,
+					@LastDay DATE
+					
+SELECT @LastDay = NULL;
+SELECT @EmployeeID = Max(E.EmployeeID) + 1
+FROM GrowingForGood.dbo.Employee E;
+
+SELECT @SupervisorDetailID = MAX(SD.SupervisorDetailID) + 1
+FROM GrowingForGood.dbo.SupervisorDetail SD;
+BEGIN TRANSACTION 
+BEGIN TRY
+
+	IF @SupervisorRole = 1
+	AND @FirstName IS NOT NULL
+	AND @LastName IS NOT NULL
+	AND @DateOfBirth IS NOT NULL
+	AND @FirstDay IS NOT NULL
+	
+	INSERT INTO GrowingForGood.dbo.Employee
+	(EmployeeID, FirstName, LastName, DateOfBirth, FirstDay, LastDay, SupervisorRole)
+	VALUES (@EmployeeID, @FirstName, @LastName, @DateOfBirth, @FirstDay, @LastDay, @SupervisorRole);
+
+/*----------------------------------------------------------------------------------------------------------------------------------
+ CHANGE HISTORY
+ Date			Modified By		Notes
+ 05/14/2021		HValuck		insterted Statement to append information into Supervisor Detail if the new employee is hired on is a supervisor
+----------------------------------------------------------------------------------------------------------------------------------*/
+	INSERT INTO GrowingForGood.dbo.SupervisorDetail
+	(SupervisorDetailID, EmployeeID, FirstDay, LastDay)
+	VALUES (@SupervisorDetailID, @EmployeeID, @FirstDay, @LastDay)
+
+	
+END TRY
+
+BEGIN CATCH
+	IF @SupervisorRole = 0
+	AND @FirstName IS NOT NULL
+	AND @LastName IS NOT NULL
+	AND @DateOfBirth IS NOT NULL
+	AND @FirstDay IS NOT NULL
+	BEGIN
+	INSERT INTO GrowingForGood.dbo.Employee
+	(EmployeeID, FirstName, LastName, DateOfBirth, FirstDay, LastDay, SupervisorRole)
+	VALUES (@EmployeeID, @FirstName, @LastName, @DateOfBirth, @FirstDay, @LastDay, @SupervisorRole)
+	END
+	ELSE
+	BEGIN
+	PRINT 'Please enter valid inputs!';
+	THROW;
+	END
+END CATCH
+COMMIT TRANSACTION
+GO
+/****** Object:  StoredProcedure [dbo].[EquipmentByPlot_sp]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS OFF
+GO
+SET QUOTED_IDENTIFIER OFF
+GO
+
+
+/****** Object:  StoredProcedure [dbo].[EquipmentByPlot_sp]    Script Date: 5/15/2021 5:47:47 PM ******/
+
+CREATE PROCEDURE [dbo].[EquipmentByPlot_sp]
+(				@Year INT
+)
+AS
+/*-------------------------------------------------------------------------------------------------
+CREATED: May 14, 2021
+AUTHOR:  Henry Valuck
+DESCRIPTION: Query which returns all of the equipment that has an age equal to or greater than the parameter input value, 
+grouped by each specific plot.
+
+ Example: EXEC GrowingForGood.dbo.EquipmentByPlot 5
+
+	
+ CHANGE HISTORY
+ Date			Modified By		Notes
+ 05/14/2021		HValuck		Procedure Created 
+----------------------------------------------------------------------------------------------------*/
+SELECT P.PlotID, E.Name, E.Classification, E.PlacedInServiceDate
+FROM GrowingForGood.dbo.Plot P
+LEFT OUTER JOIN GrowingForGood.dbo.PlotEquipment PE
+ON P.PlotID = PE.PlotID
+LEFT OUTER JOIN GrowingForGood.dbo.Equipment E
+ON PE.EquipmentID = E.EquipmentID
+LEFT OUTER JOIN GrowingForGood.dbo.EquipmentUsage EU
+ON E.EquipmentID = EU.EquipmentID
+WHERE @Year < DATEPART(Year, PlacedInServiceDate)
+GROUP BY P.PlotID, E.Name, E.Classification, E.PlacedInServiceDate;
+GO
+/****** Object:  StoredProcedure [dbo].[GetCropInfo_sp]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[GetCropInfo_sp] 
+(
+	@CropID INT = NULL
+	)
+AS 
+
+/*-------------------------------------------------------------------------------------------------
+CREATED: May 15, 2021
+AUTHOR:  Whitney Millin
+DESCRIPTION: Crop by Plot Report
+
+Example: 
+
+EXEC dbo.GetCropInfo_sp '31'
+	
+ CHANGE HISTORY
+ Date			Modified By		Notes
+ 05/15/2021 		MillinW		NA
+----------------------------------------------------------------------------------------------------*/
+
+BEGIN
+BEGIN TRY 
+BEGIN TRANSACTION
+IF EXISTS(SELECT TOP(1)CropID 
+FROM		Crop 
+WHERE		CropID=@CropID)
+BEGIN
+SELECT		C.Name Type, C.HardinessRating Quality, ISNULL((SELECT TOP(1) Size 
+FROM		Plot 
+WHERE		CropID=C.CropID),0)Quantity
+FROM		Crop C 
+WHERE		C.CropID=@CropID
+END 
+ELSE BEGIN
+SELECT		C.Name Type, C.HardinessRating Quality, ISNULL(P.Size,0)Quantity
+FROM		Crop C 
+JOIN		Plot P 
+ON			C.CropID=P.CropID 
+WHERE		P.Size LIKE'%S%'
+UNION 
+SELECT		C.Name Type, C.HardinessRating Quality, ISNULL((SELECT TOP(1) Size 
+FROM		Plot 
+WHERE		CropID=C.CropID),0)Quantity
+FROM		Crop C
+END
+COMMIT
+END TRY 
+BEGIN CATCH 
+IF			@@ROWCOUNT= 0 
+BEGIN 
+SELECT		ERROR_MESSAGE()
+END 
+END CATCH
+END
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[GetWasteAmount_sp]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[GetWasteAmount_sp]
+	(
+		@CropID INT = NULL
+		)
+AS 
+BEGIN TRANSACTION
+BEGIN TRY
+/*-------------------------------------------------------------------------------------------------
+CREATED: May 15, 2021
+AUTHOR:  Whitney Millin
+DESCRIPTION: Waste by Crop Report
+
+ Example: EXEC dbo.GetWasteAmount_sp
+	
+ CHANGE HISTORY
+ Date			Modified By		Notes
+ 05/15/2021 		MillinW		NA
+----------------------------------------------------------------------------------------------------*/
+IF			EXISTS(SELECT TOP(1)CropWasteID 
+FROM		CropWaste 
+WHERE		CropID=@CropID)
+BEGIN
+SELECT			CW.CropID, 
+				ISNULL(SUM(CW.Tonnage),0)WasteAmount
+FROM			CropWaste CW 
+INNER JOIN		Crop C 
+ON				CW.CropID=C.CropID
+WHERE			C.CropID=@CropID 
+GROUP BY		CW.CropID 
+ORDER BY		CW.CropID ASC
+END 
+ELSE BEGIN
+SELECT			CW.CropID, 
+				ISNULL(SUM(CW.Tonnage),0)WasteAmount
+FROM			CropWaste CW 
+INNER JOIN		Crop C 
+ON				CW.CropID=C.CropID
+GROUP BY		CW.CropID 
+ORDER BY		CW.CropID ASC
+END
+END TRY
+BEGIN CATCH
+ROLLBACK TRANSACTION;
+THROW; 
+IF				@@ROWCOUNT = 0 
+BEGIN SELECT	ERROR_MESSAGE()
+END 
+END CATCH
+GO
+/****** Object:  StoredProcedure [dbo].[TenuredEmployeeByPlot_sp]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS OFF
+GO
+SET QUOTED_IDENTIFIER OFF
+GO
+
+
+CREATE PROCEDURE		[dbo].[TenuredEmployeeByPlot_sp]
+
+AS
+
+/*------------------------------------------------------------------------------------------------------------------
+CREATED: May 15, 2021
+AUTHOR:  Henry Valuck
+DESCRIPTION: A query which lists all current employees which have been employed for more years than average. 
+Query returns PlotID, EmployeeID, FirstName, LastName, and Number of years employed.
+
+ Example: EXEC GrowingForGood.dbo.TenuredEmployeeByPlot_sp
+
+	
+ CHANGE HISTORY
+ Date			Modified By		Notes
+ 05/14/2021		HValuck		Procedure Created 
+-------------------------------------------------------------------------------------------------------------------*/
+
+SELECT				P.PlotID, E.EmployeeID, E.FirstName, E.LastName, DATEDIFF(YEAR, E.FirstDay, GETDATE()) AS [Number of Years Employed]
+FROM				GrowingForGood.dbo.Employee E
+LEFT OUTER JOIN		GrowingForGood.dbo.Plot P
+ON					E.EmployeeID = P.EmployeeID
+WHERE				DATEDIFF(DAY, E.FirstDay, GETDATE()) > (SELECT AVG(DATEDIFF(Day, E1.FirstDay, GETDATE())) AS NumYears
+															FROM GrowingForGood.dbo.Employee E1)
+AND					E.LastDay IS NULL;
+											
+GO
+/****** Object:  StoredProcedure [dbo].[UsageInEquipment_sp]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[UsageInEquipment_sp]
+
+(
+@EquiptmentName	VARCHAR(50),
+@UsageName		VARCHAR(50)		
+)
+
+AS
+
+/*-------------------------------------------------------------------------------------------------
+CREATED: May 15, 2021
+AUTHOR:  Tanisha Maredia
+DESCRIPTION: To Retrieve usuage time and quantity information
+
+ Example: EXEC GrowingForGood.dbo.UsageInEquipment_sp 'Mattock', 'Diesel'
+
+	
+ CHANGE HISTORY
+ Date			Modified By		Notes
+ 05/15/2021		TMaredia		Procedure Created 
+----------------------------------------------------------------------------------------------------*/
+
+BEGIN TRANSACTION
+BEGIN TRY
+
+
+--Get the Equipment usage information
+
+SELECT		U.Name, EU.Amount, EU.Date
+FROM		GrowingForGood.dbo.EquipmentUsage EU
+INNER JOIN	GrowingForGood.dbo.Usage U
+ON			EU.UsageID= U.UsageID
+INNER JOIN	GrowingForGood.dbo.Equipment E
+ON			EU.EquipmentID= E.EquipmentID
+WHERE		@EquiptmentName = E.Name
+AND			@UsageName = U.Name
+
+
+END TRY
+BEGIN CATCH
+ROLLBACK TRANSACTION;
+THROW;
+END CATCH
+COMMIT TRANSACTION;
+
+GO
+/****** Object:  StoredProcedure [dbo].[Vendorcontracts_sp]    Script Date: 5/15/2021 10:51:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[Vendorcontracts_sp]
+(
+@VendorName		VARCHAR(50)
+)
+
+AS
+
+/*-------------------------------------------------------------------------------------------------
+CREATED: May 15, 2021
+AUTHOR:  Tanisha Maredia
+DESCRIPTION: Used to get vendor contract information.
+
+ Example: EXEC GrowingForGood.dbo.Vendorcontracts_sp 'Oyoyo'
+
+	
+ CHANGE HISTORY
+ Date			Modified By		Notes
+ 05/15/2021		TMaredia		Procedure Created 
+----------------------------------------------------------------------------------------------------*/
+
+
+BEGIN TRANSACTION
+BEGIN TRY
+
+--Get the Vendor contract information
+
+SELECT		V.Name AS 'VendorName', E.Name AS 'EquipmentName', DATEDIFF(month,E.PlacedInServiceDate , GETDATE() ) AS DateDiff, E.Classification
+FROM		GrowingForGood.dbo.vendor V
+INNER JOIN  GrowingForGood.dbo.Equipment E
+ON			V.VendorID=E.VendorID
+WHERE		@VendorName= V.Name
+
+
+
+END TRY
+BEGIN CATCH
+ROLLBACK TRANSACTION;
+THROW;
+END CATCH
+COMMIT TRANSACTION;
+GO
+USE [master]
+GO
+ALTER DATABASE [GrowingForGood] SET  READ_WRITE 
+GO
