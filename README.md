@@ -3,8 +3,4 @@ Repository for Spring Quarter 2021 - INFO 4140 - Section 2 - Databases Project -
 
 Private repository just for our group's project.
 
-The .SQL file is the script to create the GrowingForGood database which currently contains all tables, fields, and database diagram. If you paste the code into a blank query in SQL Server, it will autmatically create everything.
-
-The Letter of engagement file is also included, it has an updated ERD and updated Data Dictionary which follow the database. You need to click the file then click "View Raw" at the bottom of the page and it will download.
-
-The "Projects" tab has Part 2 broken up into five different projects for tracking and organization purposes.
+The .SQL file is the script to create the GrowingForGood database. I have made some changes to my version of the database so if you want yours to look the same you will need to drop GrowingForGood and then copy the whole CREATE script and execute the code and it will rebuild the whole database.
