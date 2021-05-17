@@ -1,24 +1,24 @@
 USE [GrowingForGood]
 GO
-/****** Object:  StoredProcedure [dbo].[Vendorcontracts_sp]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  StoredProcedure [dbo].[Vendorcontracts_sp]    Script Date: 5/17/2021 9:50:51 AM ******/
 DROP PROCEDURE [dbo].[Vendorcontracts_sp]
 GO
-/****** Object:  StoredProcedure [dbo].[UsageInEquipment_sp]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  StoredProcedure [dbo].[UsageInEquipment_sp]    Script Date: 5/17/2021 9:50:51 AM ******/
 DROP PROCEDURE [dbo].[UsageInEquipment_sp]
 GO
-/****** Object:  StoredProcedure [dbo].[TenuredEmployeeByPlot_sp]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  StoredProcedure [dbo].[TenuredEmployeeByPlot_sp]    Script Date: 5/17/2021 9:50:51 AM ******/
 DROP PROCEDURE [dbo].[TenuredEmployeeByPlot_sp]
 GO
-/****** Object:  StoredProcedure [dbo].[GetWasteAmount_sp]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetWasteAmount_sp]    Script Date: 5/17/2021 9:50:51 AM ******/
 DROP PROCEDURE [dbo].[GetWasteAmount_sp]
 GO
-/****** Object:  StoredProcedure [dbo].[GetCropInfo_sp]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetCropInfo_sp]    Script Date: 5/17/2021 9:50:51 AM ******/
 DROP PROCEDURE [dbo].[GetCropInfo_sp]
 GO
-/****** Object:  StoredProcedure [dbo].[EquipmentByPlot_sp]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  StoredProcedure [dbo].[EquipmentByPlot_sp]    Script Date: 5/17/2021 9:50:51 AM ******/
 DROP PROCEDURE [dbo].[EquipmentByPlot_sp]
 GO
-/****** Object:  StoredProcedure [dbo].[AddEmployee_sp]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  StoredProcedure [dbo].[AddEmployee_sp]    Script Date: 5/17/2021 9:50:51 AM ******/
 DROP PROCEDURE [dbo].[AddEmployee_sp]
 GO
 ALTER TABLE [dbo].[Employee] DROP CONSTRAINT [CK__Employee__Superv__74794A92]
@@ -45,60 +45,60 @@ ALTER TABLE [dbo].[CropWaste] DROP CONSTRAINT [FK_WasteID]
 GO
 ALTER TABLE [dbo].[CropWaste] DROP CONSTRAINT [FK_CropID]
 GO
-/****** Object:  Table [dbo].[Waste]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[Waste]    Script Date: 5/17/2021 9:50:51 AM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Waste]') AND type in (N'U'))
 DROP TABLE [dbo].[Waste]
 GO
-/****** Object:  Table [dbo].[Vendor]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[Vendor]    Script Date: 5/17/2021 9:50:51 AM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Vendor]') AND type in (N'U'))
 DROP TABLE [dbo].[Vendor]
 GO
-/****** Object:  Table [dbo].[Usage]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[Usage]    Script Date: 5/17/2021 9:50:51 AM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Usage]') AND type in (N'U'))
 DROP TABLE [dbo].[Usage]
 GO
-/****** Object:  Table [dbo].[SupervisorDetail]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[SupervisorDetail]    Script Date: 5/17/2021 9:50:51 AM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SupervisorDetail]') AND type in (N'U'))
 DROP TABLE [dbo].[SupervisorDetail]
 GO
-/****** Object:  Table [dbo].[PlotEquipment]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[PlotEquipment]    Script Date: 5/17/2021 9:50:51 AM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PlotEquipment]') AND type in (N'U'))
 DROP TABLE [dbo].[PlotEquipment]
 GO
-/****** Object:  Table [dbo].[Plot]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[Plot]    Script Date: 5/17/2021 9:50:51 AM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Plot]') AND type in (N'U'))
 DROP TABLE [dbo].[Plot]
 GO
-/****** Object:  Table [dbo].[EquipmentUsage]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[EquipmentUsage]    Script Date: 5/17/2021 9:50:51 AM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[EquipmentUsage]') AND type in (N'U'))
 DROP TABLE [dbo].[EquipmentUsage]
 GO
-/****** Object:  Table [dbo].[Equipment]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[Equipment]    Script Date: 5/17/2021 9:50:51 AM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Equipment]') AND type in (N'U'))
 DROP TABLE [dbo].[Equipment]
 GO
-/****** Object:  Table [dbo].[Employee]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[Employee]    Script Date: 5/17/2021 9:50:51 AM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Employee]') AND type in (N'U'))
 DROP TABLE [dbo].[Employee]
 GO
-/****** Object:  Table [dbo].[DisposalLocation]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[DisposalLocation]    Script Date: 5/17/2021 9:50:51 AM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DisposalLocation]') AND type in (N'U'))
 DROP TABLE [dbo].[DisposalLocation]
 GO
-/****** Object:  Table [dbo].[CropWaste]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[CropWaste]    Script Date: 5/17/2021 9:50:51 AM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CropWaste]') AND type in (N'U'))
 DROP TABLE [dbo].[CropWaste]
 GO
-/****** Object:  Table [dbo].[Crop]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[Crop]    Script Date: 5/17/2021 9:50:51 AM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Crop]') AND type in (N'U'))
 DROP TABLE [dbo].[Crop]
 GO
 USE [master]
 GO
-/****** Object:  Database [GrowingForGood]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Database [GrowingForGood]    Script Date: 5/17/2021 9:50:51 AM ******/
 DROP DATABASE [GrowingForGood]
 GO
-/****** Object:  Database [GrowingForGood]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Database [GrowingForGood]    Script Date: 5/17/2021 9:50:51 AM ******/
 CREATE DATABASE [GrowingForGood]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -180,7 +180,7 @@ ALTER DATABASE [GrowingForGood] SET QUERY_STORE = OFF
 GO
 USE [GrowingForGood]
 GO
-/****** Object:  Table [dbo].[Crop]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[Crop]    Script Date: 5/17/2021 9:50:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -196,7 +196,7 @@ CREATE TABLE [dbo].[Crop](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CropWaste]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[CropWaste]    Script Date: 5/17/2021 9:50:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -213,7 +213,7 @@ CREATE TABLE [dbo].[CropWaste](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[DisposalLocation]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[DisposalLocation]    Script Date: 5/17/2021 9:50:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -231,7 +231,7 @@ CREATE TABLE [dbo].[DisposalLocation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Employee]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[Employee]    Script Date: 5/17/2021 9:50:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -251,7 +251,7 @@ CREATE TABLE [dbo].[Employee](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Equipment]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[Equipment]    Script Date: 5/17/2021 9:50:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -268,7 +268,7 @@ CREATE TABLE [dbo].[Equipment](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[EquipmentUsage]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[EquipmentUsage]    Script Date: 5/17/2021 9:50:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -285,7 +285,7 @@ CREATE TABLE [dbo].[EquipmentUsage](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Plot]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[Plot]    Script Date: 5/17/2021 9:50:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -301,7 +301,7 @@ CREATE TABLE [dbo].[Plot](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PlotEquipment]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[PlotEquipment]    Script Date: 5/17/2021 9:50:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -316,7 +316,7 @@ CREATE TABLE [dbo].[PlotEquipment](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[SupervisorDetail]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[SupervisorDetail]    Script Date: 5/17/2021 9:50:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -332,7 +332,7 @@ CREATE TABLE [dbo].[SupervisorDetail](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Usage]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[Usage]    Script Date: 5/17/2021 9:50:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -348,7 +348,7 @@ CREATE TABLE [dbo].[Usage](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Vendor]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[Vendor]    Script Date: 5/17/2021 9:50:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -367,7 +367,7 @@ CREATE TABLE [dbo].[Vendor](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Waste]    Script Date: 5/16/2021 7:33:45 PM ******/
+/****** Object:  Table [dbo].[Waste]    Script Date: 5/17/2021 9:50:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -696,7 +696,7 @@ ALTER TABLE [dbo].[Waste] CHECK CONSTRAINT [FK_Waste_DisposalLocation_DisposalLo
 GO
 ALTER TABLE [dbo].[Employee]  WITH CHECK ADD CHECK  (([SupervisorRole]=(0) OR [SupervisorRole]=(1)))
 GO
-/****** Object:  StoredProcedure [dbo].[AddEmployee_sp]    Script Date: 5/16/2021 7:33:46 PM ******/
+/****** Object:  StoredProcedure [dbo].[AddEmployee_sp]    Script Date: 5/17/2021 9:50:52 AM ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -718,7 +718,7 @@ AUTHOR:  Henry Valuck
 DESCRIPTION: To add all necessary information for a new employee, and have the Employee and SupervisorDetail
 append the new data properly if the criteria are met.
 
- Example: EXEC GrowingForGood.dbo.AddEmployee_sp 'Henry', 'Valuck, '1994-12-14', '2021-05-14', 0
+ Example: EXEC GrowingForGood.dbo.AddEmployee_sp 'Henry', 'Valuck, 10, '1994-12-14', '2021-05-14', 0
 
 	
  CHANGE HISTORY
@@ -732,47 +732,47 @@ DECLARE				@EmployeeID INT,
 					@SupervisorDetailID INT,
 					@LastDay DATE
 					
-SELECT @LastDay = NULL;
-SELECT @EmployeeID = Max(E.EmployeeID) + 1
-FROM GrowingForGood.dbo.Employee E;
+SELECT		@LastDay = NULL;
+SELECT		@EmployeeID = Max(E.EmployeeID) + 1
+FROM		GrowingForGood.dbo.Employee E;
 
-SELECT @SupervisorDetailID = MAX(SD.SupervisorDetailID) + 1
-FROM GrowingForGood.dbo.SupervisorDetail SD;
+SELECT		@SupervisorDetailID = MAX(SD.SupervisorDetailID) + 1
+FROM		GrowingForGood.dbo.SupervisorDetail SD;
 BEGIN TRANSACTION 
 BEGIN TRY
 
-	IF @SupervisorRole = 1
-	AND @FirstName IS NOT NULL
-	AND @LastName IS NOT NULL
-	AND @DateOfBirth IS NOT NULL
-	AND @FirstDay IS NOT NULL
+	IF		@SupervisorRole = 1
+	AND		@FirstName IS NOT NULL
+	AND		@LastName IS NOT NULL
+	AND		@DateOfBirth IS NOT NULL
+	AND		@FirstDay IS NOT NULL
 	
-	INSERT INTO GrowingForGood.dbo.Employee
-	(EmployeeID, FirstName, LastName, PlotID, DateOfBirth, FirstDay, LastDay, SupervisorRole)
-	VALUES (@EmployeeID, @FirstName, @LastName, @Plot, @DateOfBirth, @FirstDay, @LastDay, @SupervisorRole);
+	INSERT INTO		GrowingForGood.dbo.Employee
+					(EmployeeID, FirstName, LastName, PlotID, DateOfBirth, FirstDay, LastDay, SupervisorRole)
+	VALUES			(@EmployeeID, @FirstName, @LastName, @Plot, @DateOfBirth, @FirstDay, @LastDay, @SupervisorRole);
 
 /*----------------------------------------------------------------------------------------------------------------------------------
  CHANGE HISTORY
  Date			Modified By		Notes
  05/14/2021		HValuck		insterted Statement to append information into Supervisor Detail if the new employee is hired on is a supervisor
 ----------------------------------------------------------------------------------------------------------------------------------*/
-	INSERT INTO GrowingForGood.dbo.SupervisorDetail
-	(SupervisorDetailID, EmployeeID, FirstDay, LastDay)
-	VALUES (@SupervisorDetailID, @EmployeeID, @FirstDay, @LastDay)
+	INSERT INTO		GrowingForGood.dbo.SupervisorDetail
+					(SupervisorDetailID, EmployeeID, FirstDay, LastDay)
+	VALUES			(@SupervisorDetailID, @EmployeeID, @FirstDay, @LastDay)
 
 	
 END TRY
 
 BEGIN CATCH
-	IF @SupervisorRole = 0
-	AND @FirstName IS NOT NULL
-	AND @LastName IS NOT NULL
-	AND @DateOfBirth IS NOT NULL
-	AND @FirstDay IS NOT NULL
+	IF		@SupervisorRole = 0
+	AND		@FirstName IS NOT NULL
+	AND		@LastName IS NOT NULL
+	AND		@DateOfBirth IS NOT NULL
+	AND		@FirstDay IS NOT NULL
 	BEGIN
-	INSERT INTO GrowingForGood.dbo.Employee
-	(EmployeeID, FirstName, LastName, PlotID, DateOfBirth, FirstDay, LastDay, SupervisorRole)
-	VALUES (@EmployeeID, @FirstName, @LastName, @Plot, @DateOfBirth, @FirstDay, @LastDay, @SupervisorRole)
+	INSERT INTO		GrowingForGood.dbo.Employee
+					(EmployeeID, FirstName, LastName, PlotID, DateOfBirth, FirstDay, LastDay, SupervisorRole)
+	VALUES			(@EmployeeID, @FirstName, @LastName, @Plot, @DateOfBirth, @FirstDay, @LastDay, @SupervisorRole)
 	END
 	ELSE
 	BEGIN
@@ -782,7 +782,7 @@ BEGIN CATCH
 END CATCH
 COMMIT TRANSACTION
 GO
-/****** Object:  StoredProcedure [dbo].[EquipmentByPlot_sp]    Script Date: 5/16/2021 7:33:46 PM ******/
+/****** Object:  StoredProcedure [dbo].[EquipmentByPlot_sp]    Script Date: 5/17/2021 9:50:52 AM ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -792,7 +792,7 @@ GO
 /****** Object:  StoredProcedure [dbo].[EquipmentByPlot_sp]    Script Date: 5/15/2021 5:47:47 PM ******/
 
 CREATE PROCEDURE [dbo].[EquipmentByPlot_sp]
-(				@Year INT
+(				@Age INT
 )
 AS
 /*-------------------------------------------------------------------------------------------------
@@ -801,25 +801,25 @@ AUTHOR:  Henry Valuck
 DESCRIPTION: Query which returns all of the equipment that has an age equal to or greater than the parameter input value, 
 grouped by each specific plot.
 
- Example: EXEC GrowingForGood.dbo.EquipmentByPlot 5
+ Example: EXEC GrowingForGood.dbo.EquipmentByPlot_sp 5
 
 	
  CHANGE HISTORY
  Date			Modified By		Notes
  05/14/2021		HValuck		Procedure Created 
 ----------------------------------------------------------------------------------------------------*/
-SELECT P.PlotID, E.Name, E.Classification, E.PlacedInServiceDate
-FROM GrowingForGood.dbo.Plot P
-LEFT OUTER JOIN GrowingForGood.dbo.PlotEquipment PE
-ON P.PlotID = PE.PlotID
-LEFT OUTER JOIN GrowingForGood.dbo.Equipment E
-ON PE.EquipmentID = E.EquipmentID
-LEFT OUTER JOIN GrowingForGood.dbo.EquipmentUsage EU
-ON E.EquipmentID = EU.EquipmentID
-WHERE @Year < DATEPART(Year, PlacedInServiceDate)
-GROUP BY P.PlotID, E.Name, E.Classification, E.PlacedInServiceDate;
+SELECT				P.PlotID, E.Name, E.Classification, E.PlacedInServiceDate
+FROM				GrowingForGood.dbo.Plot P
+LEFT OUTER JOIN		GrowingForGood.dbo.PlotEquipment PE
+ON					P.PlotID = PE.PlotID
+LEFT OUTER JOIN		GrowingForGood.dbo.Equipment E
+ON					PE.EquipmentID = E.EquipmentID
+LEFT OUTER JOIN		GrowingForGood.dbo.EquipmentUsage EU
+ON					E.EquipmentID = EU.EquipmentID
+WHERE				@Age <= DATEDIFF(Year, PlacedInServiceDate, CURRENT_TIMESTAMP)
+GROUP BY			P.PlotID, E.Name, E.Classification, E.PlacedInServiceDate;
 GO
-/****** Object:  StoredProcedure [dbo].[GetCropInfo_sp]    Script Date: 5/16/2021 7:33:46 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetCropInfo_sp]    Script Date: 5/17/2021 9:50:52 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -884,7 +884,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[GetWasteAmount_sp]    Script Date: 5/16/2021 7:33:46 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetWasteAmount_sp]    Script Date: 5/17/2021 9:50:52 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -938,7 +938,7 @@ BEGIN SELECT	ERROR_MESSAGE()
 END 
 END CATCH
 GO
-/****** Object:  StoredProcedure [dbo].[TenuredEmployeeByPlot_sp]    Script Date: 5/16/2021 7:33:46 PM ******/
+/****** Object:  StoredProcedure [dbo].[TenuredEmployeeByPlot_sp]    Script Date: 5/17/2021 9:50:52 AM ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -972,7 +972,7 @@ WHERE				DATEDIFF(DAY, E.FirstDay, GETDATE()) > (SELECT AVG(DATEDIFF(Day, E1.Fir
 AND					E.LastDay IS NULL;
 											
 GO
-/****** Object:  StoredProcedure [dbo].[UsageInEquipment_sp]    Script Date: 5/16/2021 7:33:46 PM ******/
+/****** Object:  StoredProcedure [dbo].[UsageInEquipment_sp]    Script Date: 5/17/2021 9:50:52 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1024,7 +1024,7 @@ END CATCH
 COMMIT TRANSACTION;
 
 GO
-/****** Object:  StoredProcedure [dbo].[Vendorcontracts_sp]    Script Date: 5/16/2021 7:33:46 PM ******/
+/****** Object:  StoredProcedure [dbo].[Vendorcontracts_sp]    Script Date: 5/17/2021 9:50:52 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
