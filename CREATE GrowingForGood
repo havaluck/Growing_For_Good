@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [GrowingForGood]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  Database [GrowingForGood]    Script Date: 5/17/2021 11:07:39 AM ******/
 CREATE DATABASE [GrowingForGood]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -82,7 +82,7 @@ ALTER DATABASE [GrowingForGood] SET QUERY_STORE = OFF
 GO
 USE [GrowingForGood]
 GO
-/****** Object:  Table [dbo].[Crop]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  Table [dbo].[Crop]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -98,7 +98,7 @@ CREATE TABLE [dbo].[Crop](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CropWaste]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  Table [dbo].[CropWaste]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -115,7 +115,7 @@ CREATE TABLE [dbo].[CropWaste](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[DisposalLocation]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  Table [dbo].[DisposalLocation]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -133,7 +133,7 @@ CREATE TABLE [dbo].[DisposalLocation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Employee]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  Table [dbo].[Employee]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -153,7 +153,7 @@ CREATE TABLE [dbo].[Employee](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Equipment]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  Table [dbo].[Equipment]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -170,7 +170,7 @@ CREATE TABLE [dbo].[Equipment](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[EquipmentUsage]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  Table [dbo].[EquipmentUsage]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -187,7 +187,7 @@ CREATE TABLE [dbo].[EquipmentUsage](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Plot]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  Table [dbo].[Plot]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -203,7 +203,7 @@ CREATE TABLE [dbo].[Plot](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PlotEquipment]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  Table [dbo].[PlotEquipment]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -218,7 +218,7 @@ CREATE TABLE [dbo].[PlotEquipment](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[SupervisorDetail]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  Table [dbo].[SupervisorDetail]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -234,7 +234,7 @@ CREATE TABLE [dbo].[SupervisorDetail](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Usage]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  Table [dbo].[Usage]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -250,7 +250,7 @@ CREATE TABLE [dbo].[Usage](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Vendor]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  Table [dbo].[Vendor]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -269,7 +269,7 @@ CREATE TABLE [dbo].[Vendor](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Waste]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  Table [dbo].[Waste]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -286,25 +286,25 @@ CREATE TABLE [dbo].[Waste](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (30, N'Eriogonum glandulosum (Nutt.) Nutt. ex Benth.', N'SPR', 1)
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (30, N'Sugar Cane', N'SPR', 1)
 GO
-INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (31, N'Callistemon rugulosus DC.', N'SUM', 4)
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (31, N'Corn', N'SUM', 4)
 GO
-INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (32, N'Juncus tracyi Rydb.', N'SUM', 6)
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (32, N'Broccoli', N'SUM', 6)
 GO
-INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (33, N'Cryptantha wigginsii I.M. Johnst.', N'SPR', 6)
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (33, N'Squash', N'SPR', 6)
 GO
-INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (34, N'Atriplex eardleyae Aellen', N'SUM', 6)
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (34, N'Wheat', N'SUM', 6)
 GO
-INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (35, N'Usnea affinis Mot.', N'SPR', 2)
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (35, N'Soy', N'SPR', 2)
 GO
-INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (36, N'Buellia silicicola de Lesd.', N'SPR', 2)
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (36, N'Hay', N'SPR', 2)
 GO
-INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (37, N'Cynosciadium digitatum DC.', N'FAL', 6)
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (37, N'Barley', N'FAL', 6)
 GO
-INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (38, N'Calyptranthes zuzygium (L.) Sw.', N'FAL', 4)
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (38, N'Potatoes', N'FAL', 4)
 GO
-INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (39, N'Cladrastis Raf.', N'SUM', 2)
+INSERT [dbo].[Crop] ([CropID], [Name], [HarvestSeason], [HardinessRating]) VALUES (39, N'Carrots', N'SUM', 2)
 GO
 INSERT [dbo].[CropWaste] ([CropWasteID], [CropID], [WasteID], [Tonnage], [Date]) VALUES (900, 34, 79, 60.14, CAST(N'1989-07-29' AS Date))
 GO
@@ -328,23 +328,23 @@ INSERT [dbo].[CropWaste] ([CropWasteID], [CropID], [WasteID], [Tonnage], [Date])
 GO
 INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (10, 80063, N'Scott', N'Monticello', N'MN', NULL)
 GO
-INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (11, 4481, N'Cody', N'Washington', N'DC', NULL)
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (11, 4481, N'Cody', N'Washington', N'DC', 20001)
 GO
 INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (12, 70128, N'Northfield', N'Anchorage', N'AK', NULL)
 GO
-INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (13, 2146, N'North', N'Lancaster', N'PA', NULL)
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (13, 2146, N'North', N'Lancaster', N'PA', 15003)
 GO
-INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (14, 7280, N'Fordem', N'Huntsville', N'AL', NULL)
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (14, 7280, N'Fordem', N'Huntsville', N'AL', 35007)
 GO
-INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (15, 95, N'Sauthoff', N'Roanoke', N'VA', NULL)
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (15, 95, N'Sauthoff', N'Roanoke', N'VA', 20124)
 GO
 INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (16, 8930, N'Lunder', N'Sioux Falls', N'SD', NULL)
 GO
-INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (17, 76, N'Merrick', N'Jacksonville', N'FL', NULL)
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (17, 76, N'Merrick', N'Jacksonville', N'FL', 33312)
 GO
-INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (18, 25, N'Blackbird', N'Sarasota', N'FL', NULL)
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (18, 25, N'Blackbird', N'Sarasota', N'FL', 33338)
 GO
-INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (19, 7818, N'Prentice', N'Durham', N'NC', NULL)
+INSERT [dbo].[DisposalLocation] ([DisposalLocationID], [BuildingNumber], [Street], [City], [State], [ZipCode]) VALUES (19, 7818, N'Prentice', N'Durham', N'NC', 28111)
 GO
 INSERT [dbo].[Employee] ([EmployeeID], [PlotID], [FirstName], [LastName], [DateOfBirth], [FirstDay], [LastDay], [SupervisorRole]) VALUES (200, NULL, N'Réjane', N'Dhenin', CAST(N'2000-05-12' AS Date), CAST(N'2010-12-06' AS Date), CAST(N'2015-05-17' AS Date), 1)
 GO
@@ -598,7 +598,7 @@ ALTER TABLE [dbo].[Waste] CHECK CONSTRAINT [FK_Waste_DisposalLocation_DisposalLo
 GO
 ALTER TABLE [dbo].[Employee]  WITH CHECK ADD CHECK  (([SupervisorRole]=(0) OR [SupervisorRole]=(1)))
 GO
-/****** Object:  StoredProcedure [dbo].[AddEmployee_sp]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  StoredProcedure [dbo].[AddEmployee_sp]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -684,7 +684,7 @@ BEGIN CATCH
 END CATCH
 COMMIT TRANSACTION
 GO
-/****** Object:  StoredProcedure [dbo].[EquipmentByPlot_sp]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  StoredProcedure [dbo].[EquipmentByPlot_sp]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -710,7 +710,8 @@ grouped by each specific plot.
  Date			Modified By		Notes
  05/14/2021		HValuck		Procedure Created 
 ----------------------------------------------------------------------------------------------------*/
-SELECT				P.PlotID, E.Name, E.Classification, E.PlacedInServiceDate
+SELECT				P.PlotID, E.Name, E.Classification, E.PlacedInServiceDate, 
+					DATEDIFF(year, E.PlacedInServiceDate, CURRENT_TIMESTAMP) AS Age
 FROM				GrowingForGood.dbo.Plot P
 LEFT OUTER JOIN		GrowingForGood.dbo.PlotEquipment PE
 ON					P.PlotID = PE.PlotID
@@ -721,7 +722,7 @@ ON					E.EquipmentID = EU.EquipmentID
 WHERE				@Age <= DATEDIFF(Year, PlacedInServiceDate, CURRENT_TIMESTAMP)
 GROUP BY			P.PlotID, E.Name, E.Classification, E.PlacedInServiceDate;
 GO
-/****** Object:  StoredProcedure [dbo].[GetCropInfo_sp]    Script Date: 5/17/2021 9:52:03 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetCropInfo_sp]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -742,7 +743,7 @@ This query aids Growing for good to keep track of the type of crops grown and pl
 the soil and keep it from eroding and maintain healthy soil levels.
 
 
-Example: EXEC dbo.GetCropInfo_sp '31'
+Example: EXEC GrowingForGood.dbo.GetCropInfo_sp '31'
 	
  CHANGE HISTORY
  Date			Modified By		Notes
@@ -752,7 +753,7 @@ Example: EXEC dbo.GetCropInfo_sp '31'
 BEGIN
 BEGIN TRY 
 BEGIN TRANSACTION
-IF EXISTS(SELECT TOP(1)CropID 
+IF			EXISTS(SELECT TOP(1)CropID 
 FROM		Crop 
 WHERE		CropID=@CropID)
 BEGIN
@@ -786,7 +787,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[GetWasteAmount_sp]    Script Date: 5/17/2021 9:52:04 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetWasteAmount_sp]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -840,7 +841,7 @@ BEGIN SELECT	ERROR_MESSAGE()
 END 
 END CATCH
 GO
-/****** Object:  StoredProcedure [dbo].[TenuredEmployeeByPlot_sp]    Script Date: 5/17/2021 9:52:04 AM ******/
+/****** Object:  StoredProcedure [dbo].[TenuredEmployeeByPlot_sp]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -874,7 +875,7 @@ WHERE				DATEDIFF(DAY, E.FirstDay, GETDATE()) > (SELECT AVG(DATEDIFF(Day, E1.Fir
 AND					E.LastDay IS NULL;
 											
 GO
-/****** Object:  StoredProcedure [dbo].[UsageInEquipment_sp]    Script Date: 5/17/2021 9:52:04 AM ******/
+/****** Object:  StoredProcedure [dbo].[UsageInEquipment_sp]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -926,7 +927,7 @@ END CATCH
 COMMIT TRANSACTION;
 
 GO
-/****** Object:  StoredProcedure [dbo].[Vendorcontracts_sp]    Script Date: 5/17/2021 9:52:04 AM ******/
+/****** Object:  StoredProcedure [dbo].[Vendorcontracts_sp]    Script Date: 5/17/2021 11:07:39 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
